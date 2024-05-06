@@ -45,6 +45,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'GamePage',
           path: '/gamePage',
           builder: (context, params) => const GamePageWidget(),
+        ),
+        FFRoute(
+          name: 'DonatePage',
+          path: '/donatePage',
+          builder: (context, params) => const DonatePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
