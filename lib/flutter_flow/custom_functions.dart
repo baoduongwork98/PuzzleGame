@@ -9,8 +9,11 @@ import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
 
-List<int>? initBoard() {
-  List<int> numbersList = [1, 2, 3, 4, 5, 6, 7, 8];
+List<int>? initBoard(int lv) {
+  List<int> numbersList = [];
+  for (int i = 1; i < lv * lv; i++) {
+    numbersList.add(i);
+  }
   return numbersList;
 }
 

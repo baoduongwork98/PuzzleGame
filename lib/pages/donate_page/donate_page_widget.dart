@@ -67,8 +67,9 @@ class _DonatePageWidgetState extends State<DonatePageWidget> {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
+                const Spacer(),
                 Text(
-                  'Thanks for donate !!!',
+                  'Thanks for donate :)',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         color: FlutterFlowTheme.of(context).primaryBackground,
@@ -76,30 +77,33 @@ class _DonatePageWidgetState extends State<DonatePageWidget> {
                         letterSpacing: 0.0,
                       ),
                 ),
-                const Spacer(),
-                FFButtonWidget(
-                  onPressed: () async {
-                    context.safePop();
-                  },
-                  text: 'Go Back',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: const Color(0x4C0C044B),
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 50.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      context.safePop();
+                    },
+                    text: 'Go Back',
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0x4C0C044B),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 3.0,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ],

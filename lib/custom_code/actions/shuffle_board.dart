@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<List<int>> shuffleBoard() async {
+Future<List<int>> shuffleBoard(int lv) async {
   // Add your function code here
-  List<int> numbersList = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+//  List<int> numbersList = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  List<int> numbersList = [];
+  for (int i = 0; i < lv * lv; i++) {
+    numbersList.add(i);
+  }
   numbersList.shuffle();
   return numbersList;
 }
