@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 
-bool isSolved(List<int> board) {
-  List<int> solvedList = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+bool isSolved(List<int> board, int lv) {
+  List<int> solvedList = [];
+  for (int i = 1; i < lv * lv; i++) {
+    solvedList.add(i);
+  }
+  solvedList.add(0);
   return listEquals(solvedList, board);
 }

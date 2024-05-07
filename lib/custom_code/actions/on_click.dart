@@ -11,9 +11,10 @@ Future<dynamic> onClick(
   List<int> list,
   int index,
   int moves,
+  int lv,
 ) async {
   // Add your function code here!
-  const int _puzzleSize = 3;
+  int _puzzleSize = lv;
   int emptyTilePosIndex = list.indexOf(0);
   int emptyTilePosRow = emptyTilePosIndex ~/ _puzzleSize;
   int emptyTilePosCol = emptyTilePosIndex % _puzzleSize;

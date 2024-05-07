@@ -4,12 +4,18 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'game_page_model.dart';
 export 'game_page_model.dart';
 
 class GamePageWidget extends StatefulWidget {
-  const GamePageWidget({super.key});
+  const GamePageWidget({
+    super.key,
+    required this.level,
+  });
+
+  final int? level;
 
   @override
   State<GamePageWidget> createState() => _GamePageWidgetState();
@@ -77,7 +83,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                     width: double.infinity,
                     height: 100.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Padding(
@@ -177,7 +183,9 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      _model.shuffledNumList = await actions.shuffleBoard();
+                      _model.shuffledNumList = await actions.shuffleBoard(
+                        widget.level!,
+                      );
                       setState(() {
                         _model.boardNumbers =
                             _model.shuffledNumList!.toList().cast<int>();
@@ -224,17 +232,22 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                         builder: (context) {
                           final currNumList = _model.boardNumbers.toList();
                           if (currNumList.isEmpty) {
-                            return const SizedBox(
+                            return SizedBox(
                               width: double.infinity,
                               height: double.infinity,
-                              child: InitialGridViewWidget(),
+                              child: InitialGridViewWidget(
+                                level: widget.level!,
+                              ),
                             );
                           }
                           return GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: valueOrDefault<int>(
+                                widget.level,
+                                3,
+                              ),
                               crossAxisSpacing: 8.0,
                               mainAxisSpacing: 8.0,
                               childAspectRatio: 1.0,
@@ -247,88 +260,103 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                                   currNumList[currNumListIndex];
                               return Visibility(
                                 visible: currNumListItem != 0,
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    _model.listMovesMap = await actions.onClick(
-                                      _model.boardNumbers.toList(),
-                                      functions.getIndex(
-                                          _model.boardNumbers.toList(),
-                                          currNumListItem),
-                                      _model.moves!,
-                                    );
-                                    setState(() {
-                                      _model.boardNumbers = getJsonField(
-                                        _model.listMovesMap,
-                                        r'''$.list''',
-                                        true,
-                                      )!
-                                          .toList()
-                                          .cast<int>();
-                                      _model.moves = getJsonField(
-                                        _model.listMovesMap,
-                                        r'''$.moves''',
-                                      );
-                                    });
-                                    _model.isSolved = actions.isSolved(
-                                      _model.boardNumbers.toList(),
-                                    );
-                                    if (_model.isSolved == true) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Solved'),
-                                            content: const Text(
-                                                'You have successfully solved the puzzle!'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                child: Align(
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      _model.listMovesMap =
+                                          await actions.onClick(
+                                        _model.boardNumbers.toList(),
+                                        functions.getIndex(
+                                            _model.boardNumbers.toList(),
+                                            currNumListItem),
+                                        _model.moves!,
+                                        widget.level!,
                                       );
                                       setState(() {
-                                        _model.boardNumbers = _model
-                                            .shuffledNumList!
+                                        _model.boardNumbers = getJsonField(
+                                          _model.listMovesMap,
+                                          r'''$.list''',
+                                          true,
+                                        )!
                                             .toList()
                                             .cast<int>();
+                                        _model.moves = getJsonField(
+                                          _model.listMovesMap,
+                                          r'''$.moves''',
+                                        );
                                       });
-                                      setState(() {
-                                        _model.lastScore = _model.moves;
-                                      });
-                                      setState(() {
-                                        _model.moves = 0;
-                                      });
-                                    }
+                                      _model.isSolved = actions.isSolved(
+                                        _model.boardNumbers.toList(),
+                                        widget.level!,
+                                      );
+                                      if (_model.isSolved == true) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Solved'),
+                                              content: const Text(
+                                                  'You have successfully solved the puzzle!'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        setState(() {
+                                          _model.boardNumbers = _model
+                                              .shuffledNumList!
+                                              .toList()
+                                              .cast<int>();
+                                        });
+                                        setState(() {
+                                          _model.lastScore = _model.moves;
+                                        });
+                                        setState(() {
+                                          _model.moves = 0;
+                                        });
+                                      }
 
-                                    setState(() {});
-                                  },
-                                  text: currNumListItem.toString(),
-                                  options: FFButtonOptions(
-                                    height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: const Color(0x4C0C044B),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          fontSize: 30.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF3322A3),
+                                        borderRadius:
+                                            BorderRadius.circular(14.0),
+                                      ),
+                                      child: Align(
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0),
+                                        child: AutoSizeText(
+                                          currNumListItem.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                fontSize: 30.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                          minFontSize: 20.0,
                                         ),
-                                    elevation: 3.0,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                               );

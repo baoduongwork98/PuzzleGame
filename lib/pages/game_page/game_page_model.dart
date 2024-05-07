@@ -25,9 +25,9 @@ class GamePageModel extends FlutterFlowModel<GamePageWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - shuffleBoard] action in Button widget.
   List<int>? shuffledNumList;
-  // Stores action output result for [Custom Action - onClick] action in Button widget.
+  // Stores action output result for [Custom Action - onClick] action in Container widget.
   dynamic listMovesMap;
-  // Stores action output result for [Custom Action - isSolved] action in Button widget.
+  // Stores action output result for [Custom Action - isSolved] action in Container widget.
   bool? isSolved;
 
   @override

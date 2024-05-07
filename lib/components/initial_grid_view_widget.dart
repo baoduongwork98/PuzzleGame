@@ -1,13 +1,18 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'initial_grid_view_model.dart';
 export 'initial_grid_view_model.dart';
 
 class InitialGridViewWidget extends StatefulWidget {
-  const InitialGridViewWidget({super.key});
+  const InitialGridViewWidget({
+    super.key,
+    required this.level,
+  });
+
+  final int? level;
 
   @override
   State<InitialGridViewWidget> createState() => _InitialGridViewWidgetState();
@@ -43,11 +48,15 @@ class _InitialGridViewWidgetState extends State<InitialGridViewWidget> {
       decoration: const BoxDecoration(),
       child: Builder(
         builder: (context) {
-          final initNumList = functions.initBoard()?.toList() ?? [];
+          final initNumList =
+              functions.initBoard(widget.level!)?.toList() ?? [];
           return GridView.builder(
             padding: EdgeInsets.zero,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: valueOrDefault<int>(
+                widget.level,
+                3,
+              ),
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
               childAspectRatio: 1.0,
@@ -57,30 +66,24 @@ class _InitialGridViewWidgetState extends State<InitialGridViewWidget> {
             itemCount: initNumList.length,
             itemBuilder: (context, initNumListIndex) {
               final initNumListItem = initNumList[initNumListIndex];
-              return FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
-                },
-                text: initNumListItem.toString(),
-                options: FFButtonOptions(
-                  height: 40.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                  iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: const Color(0xFF9991FF),
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+              return Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  color: const Color(0x4CC3C0FF),
+                  borderRadius: BorderRadius.circular(14.0),
+                ),
+                alignment: const AlignmentDirectional(0.0, 0.0),
+                child: AutoSizeText(
+                  initNumListItem.toString(),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 30.0,
                         letterSpacing: 0.0,
-                        fontWeight: FontWeight.bold,
                       ),
-                  elevation: 3.0,
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
-                  ),
-                  borderRadius: BorderRadius.circular(8.0),
+                  minFontSize: 20.0,
                 ),
               );
             },
