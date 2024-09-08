@@ -44,18 +44,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           MoveEffect(
-            curve: Curves.bounceOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(0.0, -100.0),
-            end: const Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'textOnPageLoadAnimation3': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          MoveEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
@@ -77,9 +65,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         body: Container(
@@ -108,57 +94,45 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Text(
+                        'Slide Puzzle',
+                        textAlign: TextAlign.start,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Roboto Mono',
+                              color: Colors.white,
+                              fontSize: 45.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ).animateOnPageLoad(
+                          animationsMap['textOnPageLoadAnimation1']!),
                       Align(
-                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        alignment: const AlignmentDirectional(1.0, 0.0),
                         child: Text(
-                          'Slide',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto Serif',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    fontSize: 90.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation1']!),
-                      ),
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: Text(
-                          'Puzzle',
+                          'Number Game',
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Oswald',
+                                    fontFamily: 'Roboto Mono',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    fontSize: 90.0,
+                                        .secondaryBackground,
+                                    fontSize: 30.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                         ).animateOnPageLoad(
                             animationsMap['textOnPageLoadAnimation2']!),
                       ),
-                      Align(
-                        alignment: const AlignmentDirectional(1.0, 0.0),
-                        child: Text(
-                          'Game',
-                          textAlign: TextAlign.center,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    fontSize: 50.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation3']!),
-                      ),
                     ],
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    'assets/images/Screenshot_2024-09-08_at_22.33.42.png',
+                    width: 347.0,
+                    height: 346.0,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Row(
@@ -281,29 +255,33 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     ),
                   ],
                 ),
-                FFButtonWidget(
-                  onPressed: () async {
-                    context.pushNamed('DonatePage');
-                  },
-                  text: 'Donate',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: const Color(0x4C0C044B),
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      context.pushNamed('DonatePage');
+                    },
+                    text: 'Donate',
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0x4C0C044B),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 3.0,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ].divide(const SizedBox(height: 20.0)),

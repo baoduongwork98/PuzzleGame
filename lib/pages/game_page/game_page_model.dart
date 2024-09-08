@@ -22,7 +22,6 @@ class GamePageModel extends FlutterFlowModel<GamePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - shuffleBoard] action in Button widget.
   List<int>? shuffledNumList;
   // Stores action output result for [Custom Action - onClick] action in Container widget.
@@ -34,7 +33,5 @@ class GamePageModel extends FlutterFlowModel<GamePageWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

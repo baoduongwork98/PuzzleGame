@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 Future<List<int>> shuffleBoard(int lv) async {
   // Add your function code here
-//  List<int> numbersList = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  //List<int> numbersList = [1, 2, 3, 4, 5, 6, 7, 0, 8];
   List<int> numbersList = [];
   for (int i = 0; i < lv * lv; i++) {
     numbersList.add(i);

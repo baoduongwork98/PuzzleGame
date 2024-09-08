@@ -42,9 +42,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         body: Container(
@@ -62,9 +60,10 @@ class _GamePageWidgetState extends State<GamePageWidget> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 50.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Slide Puzzle',
@@ -77,8 +76,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                       ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -142,82 +140,72 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Moves:',
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Moves:',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 25.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                      child: Text(
+                        valueOrDefault<String>(
+                          _model.moves?.toString(),
+                          '0',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: FlutterFlowTheme.of(context).warning,
                               fontSize: 25.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
-                        child: Text(
-                          valueOrDefault<String>(
-                            _model.moves?.toString(),
-                            '0',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context).warning,
-                                    fontSize: 25.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      _model.shuffledNumList = await actions.shuffleBoard(
-                        widget.level!,
-                      );
-                      setState(() {
-                        _model.boardNumbers =
-                            _model.shuffledNumList!.toList().cast<int>();
-                      });
-                      setState(() {
-                        _model.isStarted = true;
-                        _model.moves = 0;
-                      });
-
-                      setState(() {});
-                    },
-                    text: _model.isStarted ? 'Reset' : 'Start',
-                    options: FFButtonOptions(
-                      height: 40.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: const Color(0x4C0C044B),
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Readex Pro',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                              ),
-                      elevation: 3.0,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ],
+                ),
+                FFButtonWidget(
+                  onPressed: () async {
+                    _model.shuffledNumList = await actions.shuffleBoard(
+                      widget.level!,
+                    );
+                    _model.boardNumbers =
+                        _model.shuffledNumList!.toList().cast<int>();
+                    safeSetState(() {});
+                    _model.isStarted = true;
+                    _model.moves = 0;
+                    safeSetState(() {});
+
+                    safeSetState(() {});
+                  },
+                  text: _model.isStarted ? 'Reset' : 'Start',
+                  options: FFButtonOptions(
+                    height: 40.0,
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    iconPadding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: const Color(0x4C0C044B),
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Readex Pro',
+                          color: Colors.white,
+                          letterSpacing: 0.0,
+                        ),
+                    elevation: 3.0,
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
                 Flexible(
@@ -226,7 +214,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                         const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 0.8,
-                      height: MediaQuery.sizeOf(context).height * 0.45,
+                      height: MediaQuery.sizeOf(context).height * 0.4,
                       decoration: const BoxDecoration(),
                       child: Builder(
                         builder: (context) {
@@ -240,6 +228,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                               ),
                             );
                           }
+
                           return GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate:
@@ -277,19 +266,18 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                                         _model.moves!,
                                         widget.level!,
                                       );
-                                      setState(() {
-                                        _model.boardNumbers = getJsonField(
-                                          _model.listMovesMap,
-                                          r'''$.list''',
-                                          true,
-                                        )!
-                                            .toList()
-                                            .cast<int>();
-                                        _model.moves = getJsonField(
-                                          _model.listMovesMap,
-                                          r'''$.moves''',
-                                        );
-                                      });
+                                      _model.boardNumbers = getJsonField(
+                                        _model.listMovesMap,
+                                        r'''$.list''',
+                                        true,
+                                      )!
+                                          .toList()
+                                          .cast<int>();
+                                      _model.moves = getJsonField(
+                                        _model.listMovesMap,
+                                        r'''$.moves''',
+                                      );
+                                      safeSetState(() {});
                                       _model.isSolved = actions.isSolved(
                                         _model.boardNumbers.toList(),
                                         widget.level!,
@@ -313,21 +301,18 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                                             );
                                           },
                                         );
-                                        setState(() {
-                                          _model.boardNumbers = _model
-                                              .shuffledNumList!
-                                              .toList()
-                                              .cast<int>();
-                                        });
-                                        setState(() {
-                                          _model.lastScore = _model.moves;
-                                        });
-                                        setState(() {
-                                          _model.moves = 0;
-                                        });
+                                        _model.boardNumbers = _model
+                                            .shuffledNumList!
+                                            .toList()
+                                            .cast<int>();
+                                        safeSetState(() {});
+                                        _model.lastScore = _model.moves;
+                                        safeSetState(() {});
+                                        _model.moves = 0;
+                                        safeSetState(() {});
                                       }
 
-                                      setState(() {});
+                                      safeSetState(() {});
                                     },
                                     child: Container(
                                       width: 100.0,
@@ -343,6 +328,7 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                                         child: AutoSizeText(
                                           currNumListItem.toString(),
                                           textAlign: TextAlign.center,
+                                          minFontSize: 20.0,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -353,7 +339,6 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                                                 fontSize: 30.0,
                                                 letterSpacing: 0.0,
                                               ),
-                                          minFontSize: 20.0,
                                         ),
                                       ),
                                     ),
@@ -367,33 +352,29 @@ class _GamePageWidgetState extends State<GamePageWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      context.safePop();
-                    },
-                    text: 'Go back',
-                    options: FFButtonOptions(
-                      height: 40.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: const Color(0x4C0C044B),
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Readex Pro',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                              ),
-                      elevation: 3.0,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
+                FFButtonWidget(
+                  onPressed: () async {
+                    context.safePop();
+                  },
+                  text: 'Go back',
+                  options: FFButtonOptions(
+                    height: 40.0,
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    iconPadding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: const Color(0x4C0C044B),
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Readex Pro',
+                          color: Colors.white,
+                          letterSpacing: 0.0,
+                        ),
+                    elevation: 3.0,
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
                     ),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ],
