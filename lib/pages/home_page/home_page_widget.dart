@@ -135,6 +135,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Container(
                       decoration: const BoxDecoration(),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: wrapWithModel(
                         model: _model.initialGridViewModel,
                         updateCallback: () => safeSetState(() {}),
@@ -296,7 +297,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
                 Container(
                   width: 100.0,
-                  height: 50.0,
+                  height: 100.0,
                   decoration: const BoxDecoration(
                     color: Color(0x00FFFFFF),
                   ),
