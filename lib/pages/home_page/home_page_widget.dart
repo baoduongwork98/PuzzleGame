@@ -1,3 +1,4 @@
+import '/components/initial_grid_view_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -88,51 +89,60 @@ class _HomePageWidgetState extends State<HomePageWidget>
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 500.0,
-                  decoration: const BoxDecoration(),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Slide Puzzle',
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Roboto Mono',
-                              color: Colors.white,
-                              fontSize: 45.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ).animateOnPageLoad(
-                          animationsMap['textOnPageLoadAnimation1']!),
-                      Align(
-                        alignment: const AlignmentDirectional(1.0, 0.0),
-                        child: Text(
-                          'Number Game',
-                          textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                  child: Container(
+                    width: 500.0,
+                    decoration: const BoxDecoration(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'Slide Puzzle',
+                          textAlign: TextAlign.start,
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Roboto Mono',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    fontSize: 30.0,
+                              FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 60.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
                                   ),
                         ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation2']!),
-                      ),
-                    ],
+                            animationsMap['textOnPageLoadAnimation1']!),
+                        Align(
+                          alignment: const AlignmentDirectional(1.0, 0.0),
+                          child: Text(
+                            'Number Game',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Roboto Mono',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  fontSize: 30.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ).animateOnPageLoad(
+                              animationsMap['textOnPageLoadAnimation2']!),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    'assets/images/Screenshot_2024-09-08_at_22.33.42.png',
-                    width: 347.0,
-                    height: 346.0,
-                    fit: BoxFit.contain,
+                Expanded(
+                  child: Align(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: Container(
+                      decoration: const BoxDecoration(),
+                      child: wrapWithModel(
+                        model: _model.initialGridViewModel,
+                        updateCallback: () => safeSetState(() {}),
+                        child: const InitialGridViewWidget(
+                          level: 3,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Row(
@@ -282,6 +292,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ),
+                ),
+                Container(
+                  width: 100.0,
+                  height: 50.0,
+                  decoration: const BoxDecoration(
+                    color: Color(0x00FFFFFF),
                   ),
                 ),
               ].divide(const SizedBox(height: 20.0)),
