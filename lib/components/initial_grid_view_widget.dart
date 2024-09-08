@@ -50,6 +50,7 @@ class _InitialGridViewWidgetState extends State<InitialGridViewWidget> {
         builder: (context) {
           final initNumList =
               functions.initBoard(widget.level!)?.toList() ?? [];
+
           return GridView.builder(
             padding: EdgeInsets.zero,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -77,13 +78,13 @@ class _InitialGridViewWidgetState extends State<InitialGridViewWidget> {
                 child: AutoSizeText(
                   initNumListItem.toString(),
                   textAlign: TextAlign.center,
+                  minFontSize: 20.0,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 30.0,
                         letterSpacing: 0.0,
                       ),
-                  minFontSize: 20.0,
                 ),
               );
             },
