@@ -7,7 +7,7 @@
     <application
         android:label="PuzzleGame"
         tools:replace="android:label"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/sliderpuzzle"
         android:requestLegacyExternalStorage="true">
 
         <activity
