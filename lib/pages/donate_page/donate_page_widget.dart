@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:onepref/onepref.dart';
-
+import 'package:http/http.dart' as http;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -28,16 +28,24 @@ class _DonatePageWidgetState extends State<DonatePageWidget> {
   IApEngine iapEngine = IApEngine();
 
 //list type product id
-  List<ProductId> storeProductIds = <ProductId>[
-    ProductId(id: "0.99usd", isConsumable: true, reward: 10),
-    ProductId(id: "3.99usd", isConsumable: true, reward: 20),
-    ProductId(id: "7.99usd", isConsumable: true, reward: 50),
-    ProductId(id: "15.99usd", isConsumable: true, reward: 100),
-    ProductId(id: "24.99usd", isConsumable: true, reward: 100),
-    ProductId(id: "39.99usd", isConsumable: true, reward: 100),
-    ProductId(id: "59.99usd", isConsumable: true, reward: 100),
-    ProductId(id: "89usd", isConsumable: true, reward: 100),
-  ];
+  List<ProductId> storeProductIds = <ProductId>[];
+
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse(
+        'https://raw.githubusercontent.com/baoduongwork98/ApiProducts/main/puzzleProduct.json'));
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      var data = jsonDecode(response.body);
+      data.forEach((element) {
+        storeProductIds
+            .add(ProductId(id: element, isConsumable: true, reward: 100));
+      });
+      print(data);
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load data');
+    }
+  }
 
   Future<void> listenPurchases(List<PurchaseDetails> list) async {
     for (PurchaseDetails purchase in list) {
@@ -60,6 +68,7 @@ class _DonatePageWidgetState extends State<DonatePageWidget> {
   }
 
   void getProducts() async {
+    await fetchData();
     final isAvailable = await iapEngine.getIsAvailable();
     if (isAvailable) {
       final result = await iapEngine.queryProducts(storeProductIds);
@@ -80,6 +89,7 @@ class _DonatePageWidgetState extends State<DonatePageWidget> {
   @override
   void initState() {
     super.initState();
+
     _model = createModel(context, () => DonatePageModel());
     //payment
     iapEngine.inAppPurchase.purchaseStream.listen((list) {
